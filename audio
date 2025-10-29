@@ -1,0 +1,14 @@
+[SerializeField] AudioClip popSound;
+    AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Hit()
+    {
+        if (popSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(popSound);
+        }
