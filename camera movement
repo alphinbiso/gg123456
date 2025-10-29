@@ -1,0 +1,27 @@
+cameracontroll
+
+using UnityEngine;
+
+public class camaracontrol : MonoBehaviour
+
+{
+
+    public Transform target; 
+
+    void Start()
+
+    {
+
+        
+
+    }
+
+    void Update()
+
+    {
+
+       transform.LookAt(target); 
+
+    }
+
+}
