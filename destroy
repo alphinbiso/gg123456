@@ -1,0 +1,41 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Coin : MonoBehaviour
+{
+    private int health = 3;
+    public GameObject scoreText;
+    public Text over;
+    // Called automatically when this coin collides with another object
+    void OnCollisionEnter(Collision collision)
+    {
+        // Check if the collided object has the tag "Player" or "MovingObject"
+        // (You can change the tag name to match your actual moving object)
+        if (collision.gameObject.CompareTag("egg"))
+        {
+            // Destroy the object that hit the coin (the moving object)
+            health++;
+            UpdscoreText();
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("bullet"))
+        {
+            // Reduce health by 1
+            health--;
+            UpdscoreText();
+            Destroy(collision.gameObject);
+
+            // If health reaches zero, destroy the coin
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                over.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+            }
+        }
+    }
+    void UpdscoreText()
+    {
+        scoreText.GetComponent<UnityEngine.UI.Text>().text = "Health: " + health;
+    }
+}
