@@ -1,0 +1,29 @@
+using UnityEngine;
+
+public class Gun : MonoBehaviour
+{
+    public GameObject bulletPrefab;   // The bullet prefab to spawn
+    public Transform firePoint;       // The point (empty object) where the bullet appears
+    public float bulletSpeed ;   // How fast the bullet moves
+
+    void Update()
+    {
+        // Check if the left mouse button is clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
+    }
+
+    void Fire()
+    {
+        // Create (spawn) a new bullet at the firePoint’s position and rotation
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        // Get the Rigidbody from the bullet and give it velocity forward
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.linearVelocity = firePoint.forward * bulletSpeed;
+
+        // Destroy the bullet automatically after 3 seconds (to clean up)
+    }   
+}
