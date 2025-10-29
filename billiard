@@ -1,0 +1,201 @@
+billiar ball
+
+using UnityEngine;
+
+using UnityEngine.UI;
+
+public class Movement : MonoBehaviour
+
+{
+
+    private Rigidbody rb;
+
+    private Rigidbody ballrb;
+
+    private float xinput; 
+
+    private float zinput;
+
+    public float speed = 30f;
+
+    public float impact = 10f;
+
+       private Vector3 startPosition;
+
+    private bool isShot = false; 
+
+    void Start()
+
+    {
+
+        rb = GetComponent<Rigidbody>();
+
+        startPosition = transform.position;
+
+    }
+
+    void Update()
+
+    {
+
+        xinput = Input.GetAxis("Horizontal");
+
+        zinput = Input.GetAxis("Vertical");
+
+        if (Input.GetMouseButtonDown(0) && !isShot)
+
+        {
+
+            Debug.Log("Mouse clicked! Shooting...");
+
+            rb.linearVelocity = Vector3.zero;
+
+           rb.AddForce(Camera.main.transform.forward * speed, ForceMode.VelocityChange);
+
+            isShot = true; 
+
+        }
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+
+    {
+
+        Debug.Log("Collided with: " + collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("ball"))
+
+        {
+
+            ballrb = collision.gameObject.GetComponent<Rigidbody>();
+
+            ballrb.linearVelocity = Vector3.zero;
+
+            ballrb.AddForce(Camera.main.transform.forward * speed, ForceMode.VelocityChange);
+
+        }
+
+    }
+
+}
+
+*******
+
+cue stick
+
+using UnityEngine;
+
+using UnityEngine.UI;
+
+public class cuestick : MonoBehaviour
+
+{
+
+    private Rigidbody cu;
+
+     private Rigidbody cb;
+
+    private float xinput; 
+
+    private float zinput;
+
+    public float speed = 30f;
+
+    public float impact = 10f;
+
+    private Vector3 startPosition;
+
+    void Start()
+
+    {
+
+        cu = GetComponent<Rigidbody>();
+
+        startPosition = transform.position;
+
+    }
+
+    void Update()
+
+    {
+
+        xinput = Input.GetAxis("Horizontal");
+
+        zinput = Input.GetAxis("Vertical");
+
+    
+
+    }
+
+    private void FixedUpdate()
+
+    {
+
+       
+
+            float xVelocity = xinput * speed;
+
+            float zVelocity = zinput * speed;
+
+            cu.linearVelocity = new Vector3(xVelocity, cu.linearVelocity.y, zVelocity);
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+
+    {
+
+        Debug.Log("Collided with: " + collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("Player"))
+
+        {
+
+            cb= collision.gameObject.GetComponent<Rigidbody>();
+
+            cb.linearVelocity = Vector3.zero;
+
+             transform.position = startPosition;
+
+            cb.AddForce(Camera.main.transform.forward * speed, ForceMode.VelocityChange);
+
+        }
+
+    }
+
+}
+
+redb*****
+
+using UnityEngine;
+
+using UnityEngine.UI;
+
+public class redb : MonoBehaviour
+
+{
+
+    private int score = 0;
+
+    public GameObject scoreText;
+
+    private void OnCollisionEnter(Collision collision)
+
+    {
+
+        if (collision.gameObject.CompareTag("ball"))
+
+        {
+
+            score++;
+
+            scoreText.GetComponent<Text>().text = "SCORE: " + score.ToString();
+
+            Destroy(collision.gameObject);
+
+        }
+
+    }
+
+}
