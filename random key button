@@ -1,0 +1,26 @@
+void Update() 
+{
+}
+
+private void OnMouseDown()
+{
+    Destroy(gameObject);
+}
+
+// (d) Destroy an object by keyboard input – for input class is used
+void Start()
+{
+}
+
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        Destroy(gameObject);
+    }
+}
+
+private void OnMouseDown()
+{
+    Destroy(gameObject);
+}
