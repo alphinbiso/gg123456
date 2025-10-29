@@ -1,0 +1,89 @@
+egg movement
+
+using UnityEngine;
+
+public class Eggmovement : MonoBehaviour
+
+{
+
+    public GameObject egg;
+
+    public Transform possition;
+
+    public float speed;
+
+    Rigidbody rb;
+
+    void Start()
+
+    {
+
+        
+
+    }
+
+    void Update()
+
+    {
+
+        if (Input.GetMouseButtonDown(0))
+
+        {
+
+           GameObject eggInstance = Instantiate(egg, possition.position, Quaternion.identity);
+
+           rb = eggInstance.GetComponent<Rigidbody>();  
+
+        }
+
+    }
+
+}
+
+******
+
+mutta destroy****
+
+using UnityEngine;
+
+using UnityEngine.UI;
+
+public class Mutta : MonoBehaviour
+
+{
+
+    private int scored = 0;
+
+    public GameObject text;
+
+    void Start()
+
+    {
+
+    }
+
+    void Update()
+
+    {
+
+    }
+
+    private void OnCollisionEnter(Collision other)
+
+    {
+
+        if (other.gameObject.CompareTag("Mutta"))
+
+        {
+
+            Destroy(other.gameObject);
+
+            scored++;
+
+            text.GetComponent<Text>().text = "SCORE:" + scored.ToString();
+
+        }
+
+    }
+
+}
