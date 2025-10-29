@@ -1,0 +1,107 @@
+bullet movement
+
+using UnityEngine;
+
+public class bulletmovement : MonoBehaviour
+
+{
+
+    public GameObject bulletperfab;
+
+    public Transform bulletposs;
+
+    public float speed;
+
+    Rigidbody rb;
+
+   
+
+   
+
+    void Start()
+
+    {
+
+        
+
+    }
+
+    void Update()
+
+    {
+
+        if (Input.GetMouseButtonDown(0))
+
+        {
+
+        
+
+            if (bulletperfab != null && bulletposs!=null) { 
+
+                GameObject newbullet=Instantiate(bulletperfab, bulletposs.position,Quaternion.identity);
+
+                rb=newbullet.GetComponent<Rigidbody>();
+
+                rb.linearVelocity = Vector3.zero;
+
+                rb.AddForce(Camera.main.transform.forward*speed,ForceMode.VelocityChange);
+
+            }
+
+        }
+
+        
+
+    }
+
+}
+
+ 
+
+**************   
+
+target
+
+using UnityEngine;
+
+using UnityEngine.UI;
+
+public class target : MonoBehaviour
+
+{
+
+    private int scored = 0;
+
+    public GameObject text;
+
+    void Start()
+
+    {
+
+    }
+
+    void Update()
+
+    {
+
+    }
+
+    private void OnCollisionEnter(Collision other)
+
+    {
+
+        if (other.gameObject.CompareTag("target"))
+
+        {
+
+            scored++;
+
+		Destroy(other.gameObject);
+
+            text.GetComponent<Text>().text = "SCORE:" + scored.ToString();
+
+        }
+
+    }
+
+}
