@@ -1,0 +1,118 @@
+football movement
+
+ using UnityEngine;
+
+using UnityEngine.UI;
+
+public class movement : MonoBehaviour
+
+{
+
+    private Rigidbody rb;
+
+    private float xinput;
+
+    private float zinput;
+
+    public float speed = 20f;
+
+    private int score = 0;
+
+    public GameObject scoreText;
+
+    private Vector3 startPosition;
+
+    private bool isShot = false; 
+
+    void Start()
+
+    {
+
+        rb = GetComponent<Rigidbody>();
+
+        startPosition = transform.position;
+
+    }
+
+    void Update()
+
+    {
+
+        xinput = Input.GetAxis("Vertical");
+
+        zinput = Input.GetAxis("Horizontal");
+
+        if (Input.GetMouseButtonDown(0) && !isShot)
+
+        {
+
+            Debug.Log("Mouse clicked! Shooting...");
+
+            rb.linearVelocity = Vector3.zero;
+
+            rb.AddForce(Camera.main.transform.forward * speed, ForceMode.VelocityChange);
+
+            isShot = true; 
+
+        }
+
+    }
+
+    private void FixedUpdate()
+
+    {
+
+        if (!isShot) 
+
+        {
+
+            float xVelocity = xinput * speed;
+
+            float zVelocity = zinput * speed;
+
+            rb.linearVelocity = new Vector3(xVelocity, rb.linearVelocity.y, zVelocity);
+
+        }
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+
+    {
+
+        Debug.Log("Collided with: " + collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("scored"))
+
+        {
+
+            score++;
+
+            scoreText.GetComponent<Text>().text = "Score: " + score.ToString();
+
+            transform.position = startPosition;
+
+            rb.linearVelocity = Vector3.zero;
+
+            isShot = false; 
+
+        }
+
+         if (collision.gameObject.CompareTag("temp"))
+
+        {
+
+          
+
+            transform.position = startPosition;
+
+            rb.linearVelocity = Vector3.zero;
+
+            isShot = false; 
+
+        }
+
+    }
+
+}
+
