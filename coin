@@ -1,0 +1,39 @@
+using UnityEngine;
+
+public class coin : MonoBehaviour
+{
+    Rigidbody rb;
+    float xInput;
+    float zInput;
+    public float speed;
+    private int points = 0;
+    public GameObject scoreText;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+       rb = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        xInput = Input.GetAxis("Horizontal");
+        zInput = Input.GetAxis("Vertical");
+    }
+    void FixedUpdate()
+    {
+        float xVelocity = xInput * speed;
+        float zVelocity = zInput * speed;
+
+        rb.linearVelocity = new Vector3(xVelocity, rb.linearVelocity.y, zVelocity);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("egg"))
+        {
+            points++;
+            scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + points;
+            Destroy(collision.gameObject);
+        }
+    }
+}
